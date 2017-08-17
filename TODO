@@ -1,2 +1,10 @@
-blink 2x
-make 3 columns instead of 3 rows
+npm start
+change pic in html
+del worker files						done
+do npm scripts							
+move core.js into scr/cryptoalert		done
+delete core.clj		DONE
+delete test.clj		DONE
+
+
+design new interface

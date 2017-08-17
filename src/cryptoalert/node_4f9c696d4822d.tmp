@@ -1,0 +1,17 @@
+var express = require('express');                   // Import express
+var app = express();                                // Initialzie express object
+var path = require('path');                         // Useful for working with paths in express
+require('dotenv').config({path: "../../.env"});     // Read environment variables from .env
+
+
+app.use(express.static(__dirname + '../../resources/public'));      //serve files
+app.get('/', function(req, res) {res.sendFile(path.join(__dirname + '../../resources/public/homepage.html'))}); //set route
+app.set('port', (process.env.PORT || 8000));    //set port
+app.listen(app.get('port'), function(){console.log('running on port: ', app.get('port'))})  //start listening
+
+
+
+
+
+console.log(process.env.BABE);
+console.log(process.env.LANG);
