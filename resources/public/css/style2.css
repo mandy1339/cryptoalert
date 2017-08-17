@@ -1,0 +1,103 @@
+header h1 {
+    /*FOR DEBUGGING border: medium solid purple;*/
+    display: inline;
+    margin: 10px;
+    font-size: 4.5em;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+    float: right;
+}
+
+#header1 {
+    padding: 40px;
+    margin-top: 15px;
+    background-color: rgba(0,0,0,0.94);
+    color: white;
+}
+
+#headerText {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+body {
+    background: url("../media/images/graph2.jpeg")no-repeat center center fixed;
+    /* background: url("https://mdbootstrap.com/images/regular/city/img%20(17).jpg")no-repeat center center fixed; */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.ControlSection {
+    margin-top: 50px;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background-color: rgba(0,0,0,0.94);
+    color: white;
+    font-size: 1.4em;
+    /* fill-opacity: .25; */
+}
+
+
+/*BUTTONS  */
+/* button {
+    background-color: #C0C0C0 !important;
+} */
+
+#section2 button {
+    color: black !important;
+    font-weight: bolder;
+    /* width: 70px;
+    height: 30px; */
+    text-align: center;
+    padding: 5px; 
+}
+
+#section2 div {
+    padding: 10px;
+}
+
+#rightUpdateButton, #leftUpdateButton {
+    margin-bottom: 30px;
+}
+
+
+
+
+#currentValue {
+    font-size: 1.25em;
+}
+
+.btn-div {
+    margin-top: 5px;
+}
+
+/* #section2 button {
+    
+	font-size: 1.1em;
+    background-color: #C0C0C0 !important;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black !important;
+} */
+/* background-color: #FFDAB9 !important; */
+
+textarea {
+  width: 90px !important;
+  height: 40px !important;
+  color: black;
+  text-align: center;
+  padding-top: 7px;
+  font-size: 0.9em;
+}
+/*DEBUGGING
+div {
+    border: thin solid green;
+} */
+
+ul {
+    font-weight: bold;
+}

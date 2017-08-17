@@ -1,0 +1,135 @@
+
+/*add new font*/
+@font-face {
+    font-family: News_Cycle;
+    src: url('../fonts/news_cycle.ttf') format('truetype');
+}
+
+
+/*add bg image, font, and text color and border*/
+body {
+    background-color: #12121C;
+    font-family: News_Cycle;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+
+/*control sections, add border and spacing*/
+.ControlSection {
+    border-style: inset ridge;
+    border-width: 7px;
+    border-color: gray;
+    padding: 10px;
+    margin: 10px;   
+}
+
+
+/*format links, (not needed as they are buttons)*/
+a {
+    text-decoration: none;
+    color: white;
+}
+
+button {
+    font-family: Old_Standard;
+    width: 65px;
+    margin: 0px 2px;
+    font-weight: bold;
+    color: black;
+}
+
+header h1 {
+    /*FOR DEBUGGING border: medium solid purple;*/
+    display: inline;
+    margin: 10px;
+}
+
+.HeaderImage {
+    position: absolute;
+    left: 350px;
+    top: 20px;
+    /*FOR DEBUGGING border: thin solid yellow;*/
+    margin-left: auto;
+}
+
+header {
+    margin: 10px 10px 0px 10px;
+    /*FOR DEBUGGING border: thin solid lightblue;*/
+    padding: 30px;
+}
+
+
+#red {
+    font-weight: bold;
+    color: red;
+    text-shadow: -.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+#yellow {
+    font-weight: bold;
+    color: yellow;
+    text-shadow: -.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+#green {
+    font-weight: bold;
+    color: green;
+    text-shadow: -.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+#blue {
+    font-weight: bold;
+    color: blue;
+    text-shadow: -.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+#pink {
+    font-weight: bolder;
+    color: pink;
+    text-shadow: -.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+#white {
+    font-weight: bold;
+    color: white;
+    text-shadow: -.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+}
+
+#headingPlusVideo {
+    display: inline-flex;
+}
+
+#videoSection {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+li {
+    display: inline;
+}
+
+nav {
+    margin-left: 13px;
+}
+
+nav a {
+    margin-right: 30px;
+}
+
+.alignleft {
+    float: left;
+}
+
+.aligntright {
+    float: right;
+}
+
+#contactName {
+    line-height: 130%;
+    /*border: thin solid yellow;*/
+    width: 400px;
+    display: inline-block;
+    padding-left: 200px;
+    margin-left: 20px;
+}
+
+#sectionContact {
+
+    padding-bottom: 30px;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "cryptoalert",
+  "version": "1.0.0",
+  "description": "custom alerts for crypto value change",
+  "main": "core.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandy1339/cryptoalert.git"
+  },
+  "keywords": [
+    "crypto",
+    "alert",
+    "cryptocurrency",
+    "alerts"
+  ],
+  "author": "Armando L. Toledo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mandy1339/cryptoalert/issues"
+  },
+  "homepage": "https://github.com/mandy1339/cryptoalert#readme"
+}
