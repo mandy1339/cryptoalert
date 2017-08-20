@@ -13,6 +13,17 @@ require('dotenv').config({path: __dirname + '/./../../.env'});     // Read envir
 var bodyParser = require('body-parser');            // Parse body params
 var passport = require('passport');                 // For logging in
 var LocalStrategy = require('passport-local').Strategy;  // For logging in
+var socket = require('socket.io');
+var justLoggedIn = false;                           // For announcing successful log in
+var justLoggedOut = false;                          // For announcing successful log out
+
+
+// Make a an array called records with objects containing db rows from aws
+
+
+
+
+
 
 
 
@@ -100,6 +111,7 @@ passport.deserializeUser(function(id, cb) {
 
 //SERVER SETUP
 //================================================================================================
+//================================================================================================
 app.use(require('morgan')('combined'));             // for logging in
 app.use(require('cookie-parser')());                // for logging in
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
@@ -111,37 +123,81 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
-//routes
-//------------------
-app.get('/', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/homepage.html'))});   
+// Routes
+//-------------------------------------------------------------------------------------------------------------
+app.get('/', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/homepage.html'))});
+app.get('/homepage', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/homepage.html'))});
 app.get('/btc', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/btc.html'))});     
 app.get('/login', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/login.html'))}); 
+app.get('/signup', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/signup.html'))}); 
 
-app.post('/login',   passport.authenticate('local',{failureRedirect:'/'}),   function(req, res) {console.log('logged in');res.redirect('/');});
+app.post('/login', passport.authenticate('local',{failureRedirect:'/login'}),  function(req, res) {
+                                                                                 console.log('\n\n', req.body.email, req.body.password, '\n\n');
+                                                                                 console.log('logged in');
+                                                                                 justLoggedIn = true;
+                                                                                 res.redirect('/');});
 
 // app.post('/login', function(req, res) {console.log(req.body.password, req.body.email);
 //                                        res.sendFile(path.join(__dirname + '/./../../resources/public/login.html'))});
-app.get('/logout',  function(req, res){req.logout(); res.redirect('/'); console.log('logged out xxxxx')});  // logout
+app.get('/logout',  function(req, res){req.logout();                                                    // logout
+                                        res.redirect('/'); 
+                                        console.log('\n\nlogged out xxxxx\n\n');
+                                        justLoggedOut = true;}); 
 
-app.get('/settings', require('connect-ensure-login').ensureLoggedIn() ,  function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/settings.html'))}); 
+app.get('/settings', require('connect-ensure-login').ensureLoggedIn() ,  function(req, res) {
+                                                          res.sendFile(path.join(__dirname + '/./../../resources/public/settings.html'))}); 
 app.get('/profile',  require('connect-ensure-login').ensureLoggedIn(),  function(req, res){res.render('profile', { user: req.user });}); //settings requires login
 //app.get('/settings.html', function(req, res) {res.redirect('/')});
+//--------------------------------------------------------------------------------------------------------------
+
+// Serve files (after gets for redirects to work)
+app.use(express.static(__dirname + '/./../../resources/public'));      
+
+// Listen
+var server = app.listen(app.get('port'), function(){console.log('running on port: ', app.get('port'))})  //start listening
+//================================================================================================
 
 
 
-//------------------
-app.use(express.static(__dirname + '/./../../resources/public'));      // serve files (after gets for redirects to work)
 
 
 
-// start the server
-//------------------
-app.listen(app.get('port'), function(){console.log('running on port: ', app.get('port'))})  //start listening
+// SOCKET SETUP
+//================================================================================================
+//================================================================================================
+var io = socket(server);
+var socketHolder;
 
+io.on('connection', function(socket){
+  socketHolder = socket;
+  console.log('Socket.io Connection with the client established');
+  console.log('Socket id: ' + socket.id);
+  // as soon as you establish connection, send a message to client
+  socket.emit('connectionEstablished', {field1: 'connection to server established'});
 
+  //upon receiving messages from the client, log it and then respond back
+  socket.on('msgFromClient1', function(data){
+    console.log(data);
+    socket.emit('msgFromServer1', {field1: 'server message no 1'});
+  });
 
+  // upon client request to learn if log in was successful, respond with the answer
+  socket.on('amILoggedIn', function(data){
+    console.log('\n\nclient is requesting log in info\n\n');      // log that the event triggered
+    console.log('responding back with variable justLoggedIn which = ', justLoggedIn); // logging value of justLoggedIn
+    socketHolder.emit('loggedInResponse', {field1: justLoggedIn});    // respond to client with value of justLoggedIn
+    setTimeout(function(){justLoggedIn = false}, 1000);           // reset justLoggedIn to false
+  });
+  
+  // upon client request to learn if log out was successful, respond with the answer
+  socket.on('amILoggedOut', function(data){
+    console.log('\n\nclient is requesting log out info\n\n');      // log that the event triggered
+    console.log('responding back with variable justLoggedOut which = ', justLoggedOut); // logging value of justLoggedOut
+    socketHolder.emit('loggedOutResponse', {field1: justLoggedOut});    // respond to client with value of justLoggedOut
+    setTimeout(function(){justLoggedOut = false}, 1000);           // reset justLoggedOut to false
+  });
 
+});
 
 
 

@@ -1,3 +1,17 @@
+body {
+    background: url("../media/images/trade-graph.jpeg")no-repeat center center fixed;
+    /* background: url("https://mdbootstrap.com/images/regular/city/img%20(17).jpg")no-repeat center center fixed; */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: white;
+}
+
+legend {
+    color: white;
+}
+
 header h1 {
     /*FOR DEBUGGING border: medium solid purple;*/
     display: inline;
@@ -24,14 +38,7 @@ header h1 {
     padding-bottom: 20px;
 }
 
-body {
-    background: url("../media/images/trade-graph.jpeg")no-repeat center center fixed;
-    /* background: url("https://mdbootstrap.com/images/regular/city/img%20(17).jpg")no-repeat center center fixed; */
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
+
 
 .ControlSection {
     margin-top: 50px;
