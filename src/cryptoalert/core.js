@@ -16,6 +16,7 @@ var LocalStrategy = require('passport-local').Strategy;  // For logging in
 var socket = require('socket.io');
 var justLoggedIn = false;                           // For announcing successful log in
 var justLoggedOut = false;                          // For announcing successful log out
+var justSignedUp = false;                           // For announcing successful sing up
 var db = require('mysql');
 
 
@@ -29,10 +30,11 @@ var connection = db.createConnection({
   host:process.env.DB_HOSTNAME,
   user:process.env.DB_USERNAME,
   password:process.env.DB_PASSWORD,
-  database:process.env.DB_NAME
+  database:process.env.DB_NAME,
+  port:process.env.DB_PORT
 })
 
-
+console.log(process.env.DB_HOSTNAME);
 
 
 
@@ -73,10 +75,17 @@ findByEmail = function(email, cb) {
 findByEmail2 = function(email, cb) {
   console.log('\n\n\nfindbyemail2 email passed: ', email, '\n\n\n\n')
   process.nextTick(function() {
-    var query = 'SELECT * FROM trader WHERE email="mandy1339@gmail.com";';
+    var query = `SELECT * FROM trader WHERE email='${email}';`;
+    console.log('\n\nquery for find email is:\n', query);
     var record;
     connection.query(query, function(error, rows, fields) {
+      if(error) {
+        console.log(error);
+      }
+      console.log('\n\nrows is:\n', rows);
+      console.log('\n\nrows[0] is:\n', rows[0]);
       if(rows[0] && rows[0].email === email){
+        
         record = rows[0];
         return cb(null, record);
       }
@@ -152,28 +161,104 @@ app.use(passport.session());
 
 // Routes
 //-------------------------------------------------------------------------------------------------------------
+// get
 app.get('/', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/homepage.html'))});
 app.get('/homepage', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/homepage.html'))});
 app.get('/btc', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/btc.html'))});     
+app.get('/signup', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/signup.html'))});
+app.get('/logout',  function(req, res){  req.logout(); res.redirect('/'); justLoggedOut = true;  });  // logout 
+app.get('/settings', require('connect-ensure-login').ensureLoggedIn() ,  function(req, res) {
+                                                          res.sendFile(path.join(__dirname + '/./../../resources/public/settings.html'))}); 
+app.get('/profile',  require('connect-ensure-login').ensureLoggedIn(),  function(req, res){res.render('profile', { user: req.user });}); //settings requires login
+app.get('/user', function(req, res) {res.send({user:req.user});});
 app.get('/login', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/login.html'))}); 
-app.get('/signup', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/signup.html'))}); 
-
+// post signup
+app.post('/signup', function(req, res) {
+  console.log('\n\n\n\nbody:\n',req.body,'\n\n\n\n\n\n');
+  var cool = req.body.cool;
+  if(cool == 'y'){cool = 'Y'} if(cool == 'n'){cool = 'N'}
+  var queryAddTrader = `INSERT INTO trader (email, first_name, last_name, password, cool) VALUES ('${req.body.email}', '${req.body.first_name}', '${req.body.last_name}', '${req.body.password}', '${cool}');`;
+  console.log('will try to add to query\n', queryAddTrader);
+  connection.query(queryAddTrader, function(error, rows, columns) {
+    if(error){console.log(error); return;}; // if error return immediatelly
+    console.log('\n\n\nquery result rows: ',rows);
+    console.log('\n\n\nquery result columns: ',columns);
+    justSignedUp = true;
+    res.redirect('/login');
+  });
+});
+// post login
 app.post('/login', passport.authenticate('local',{failureRedirect:'/login'}),  function(req, res) {
                                                                                  console.log('\n\n', req.body.email, req.body.password, '\n\n');
                                                                                  console.log('logged in');
                                                                                  justLoggedIn = true;
                                                                                  res.redirect('/');});
+// post settings
+app.post('/settings', function(req, res) {
+  // placeholders
+  var first_name, last_name, password, cool, twit, phone, ethlow, ethhigh, btclow, btchigh;
+  var strArr = [];
 
-// app.post('/login', function(req, res) {console.log(req.body.password, req.body.email);
-//                                        res.sendFile(path.join(__dirname + '/./../../resources/public/login.html'))});
-app.get('/logout',  function(req, res){req.logout();                                                    // logout
-                                        res.redirect('/'); 
-                                        console.log('\n\nlogged out xxxxx\n\n');
-                                        justLoggedOut = true;}); 
 
-app.get('/settings', require('connect-ensure-login').ensureLoggedIn() ,  function(req, res) {
-                                                          res.sendFile(path.join(__dirname + '/./../../resources/public/settings.html'))}); 
-app.get('/profile',  require('connect-ensure-login').ensureLoggedIn(),  function(req, res){res.render('profile', { user: req.user });}); //settings requires login
+  //check which fields were updated by client
+  if(req.body.first_name) {first_name = 'first_name=' + req.body.first_name; strArr.push(first_name)};
+  if(req.body.last_name) {last_name = 'last_name=' + req.body.last_name; strArr.push(last_name)};
+  if(req.body.password) {password = 'password=' + req.body.password; strArr.push(password)};
+  if(req.body.cool) {cool = 'cool=' + req.body.cool; strArr.push(cool)};
+  if(req.body.twit) {twit = 'twit=' + req.body.twit; strArr.push(twit)};
+  if(req.body.phone) {phone = 'phone=' + req.body.phone; strArr.push(phone)};
+  if(req.body.ethlow) {ethlow = 'ethlow=' + req.body.ethlow; strArr.push(ethlow)};
+  if(req.body.ethhigh) {ethhigh = 'ethhigh=' + req.body.ethhigh; strArr.push(ethhigh)};
+  if(req.body.btclow) {btclow = 'btclow=' + req.body.btclow; strArr.push(btclow)};
+  if(req.body.btchigh) {btchigh = 'btchigh=' + req.body.btchigh; strArr.push(btchigh)};
+
+  console.log(strArr);
+
+  var bigQueryString = strArr.join(', ');
+  console.log('\n\n\n\n\n\nbigquerystring:\n');
+  console.log(bigQueryString);
+  console.log('\n\n\n\n\n\n\n');
+
+
+  
+  console.log('\n\n\n\n\n\n\n');
+  console.log(req.body);
+  console.log('\n\n\n\n\n\n\n');
+  res.send(req.body);
+  console.log(Object.keys(req.body));
+
+  if(req.body.first_name){
+    
+  }
+
+  //UPDATE trader SET req.body
+});
+
+
+
+
+
+
+// {
+// "first_name": "asdf",
+// "last_name": "sadf",
+// "password": "123123123",
+// "cool": "y",
+// "twit": "asf",
+// "phone": "sadf",
+// "ethlow": "1",
+// "ethhigh": "10000",
+// "btclow": "1",
+// "btchigh": "10000"
+// }
+
+
+
+
+
+
+
+
 //app.get('/settings.html', function(req, res) {res.redirect('/')});
 //--------------------------------------------------------------------------------------------------------------
 
@@ -209,20 +294,28 @@ io.on('connection', function(socket){
   });
 
   // upon client request to learn if log in was successful, respond with the answer
-  socket.on('amILoggedIn', function(data){
+  socket.on('amILoggedIn', function(data) {
     console.log('\n\nclient is requesting log in info\n\n');      // log that the event triggered
     console.log('responding back with variable justLoggedIn which = ', justLoggedIn); // logging value of justLoggedIn
-    socketHolder.emit('loggedInResponse', {field1: justLoggedIn});    // respond to client with value of justLoggedIn
+    socket.emit('loggedInResponse', {field1: justLoggedIn});    // respond to client with value of justLoggedIn
     setTimeout(function(){justLoggedIn = false}, 1000);           // reset justLoggedIn to false
   });
   
   // upon client request to learn if log out was successful, respond with the answer
-  socket.on('amILoggedOut', function(data){
+  socket.on('amILoggedOut', function(data) {
     console.log('\n\nclient is requesting log out info\n\n');      // log that the event triggered
     console.log('responding back with variable justLoggedOut which = ', justLoggedOut); // logging value of justLoggedOut
-    socketHolder.emit('loggedOutResponse', {field1: justLoggedOut});    // respond to client with value of justLoggedOut
+    socket.emit('loggedOutResponse', {field1: justLoggedOut});    // respond to client with value of justLoggedOut
     setTimeout(function(){justLoggedOut = false}, 1000);           // reset justLoggedOut to false
   });
+
+  // upon client request to learn if sign up was successful, respond with the answer
+  socket.on('amISignedUp', function(data) {
+    console.log('\n\nclient is requesting log out info\n\n');      // log that the event triggered
+    console.log('responding back with variable justSignedUp which = ', justSignedUp); // logging value of justSignedUp
+    socket.emit('signedUpResponse', {field1: justSignedUp});      // respond to the client's request
+    setTimeout(function(){jsutSignedUp = false}, 1000);
+  })
 
 });
 

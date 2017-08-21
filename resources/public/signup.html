@@ -14,11 +14,9 @@
     <body class="container">
                 <!--    NAV    -->
         <ul id="my-nav-bar" class="nav nav-pills">
-            <li role="presentation"><a href="/homepage">HOME</a></li>
-            <li role="presentation"><a href="/login">LOGIN</a></li>
-            <li role="presentation" class="active"><a href="/signup">SIGNUP</a></li>
-            <li role="presentation"><a href="/settings">SETTINGS</a></li>
-            <li role="presentation"><a href="/logout">LOGOUT</a></li>
+            <li role="presentation"><a href="/homepage">Home</a></li>
+            <li role="presentation"><a href="/login">Login</a></li>
+            <li role="presentation" class="active"><a href="/signup">Signup</a></li>
         </ul>
 
   <!--  HEADER  -->
@@ -44,42 +42,50 @@
         <section class="row ControlSection well" id="section2" style="text-align: left">
             
             <form id="fm1" method="post">
+                
+                <!--  email  -->
                 <div class="field">
-                    <h2><label>first name</label></h2>
-                    <input id="first-name" required="true" type="text">
+                    <h2><label>email address *</label></h2>
+                    <input id="email" required="true" type="email" name="email">
                     <div style="clear: both;"></div>
                 </div>
                 
+                <!-- first name -->
                 <div class="field">
-                    <h2><label>last name</label></h2>
-                    <input id="last-name" required="true" type="text">
+                    <h2><label>first name *</label></h2>
+                    <input id="first-name" required="true" type="text" name="first_name">
                     <div style="clear: both;"></div>
                 </div>
                 
+                <!--  last name  -->
                 <div class="field">
-                    <h2><label>password</label></h2>
+                    <h2><label>last name *</label></h2>
+                    <input id="last-name" required="true" type="text" name="last_name">
+                    <div style="clear: both;"></div>
+                </div>
+
+
+                <!--  password  -->
+                <div class="field">
+                    <h2><label for="password" class="required">password (3 char pin) *</label></h2>
+                    <input id="password" required="true" type="password" name="password" maxlength="3" pattern=".{3,}" title="3 char pin">
+                    <div style="clear: both;"></div>
+                </div>
+
+ 
+                <!--  2nd password TODO -->
+                <!-- <div class="field">
+                    <h2><label>password *</label></h2>
                     <input id="password" required="true" type="password" name="password">
                     <div style="clear: both;"></div>
-                </div>
+                </div> -->
                 
+                <!--  are you cool?  -->
                 <div class="field">
-                    <h2><label>are you cool?</label></h2>
-                    <input id="cool" required="true" type="text">
+                    <h2><label>are you cool? *</label></h2>
+                    <input id="cool" required="true" type="text" name="cool" pattern="[YNyn]" maxlength="1" placeholder="y / n" title="y / n">
                     <div style="clear: both;"></div>
                 </div>
-
-                <div class="field">
-                    <h2><label>twitter screen name</label></h2>
-                    <input id="twitter" required="false" type="text">
-                    <div style="clear: both;"></div>
-                </div>
-
-                <div class="field">
-                    <h2><label>phone number</label></h2>
-                    <input id="phone-number" required="false" type="text">
-                    <div style="clear: both;"></div>
-                </div>
-
                
 
                 <input id="login-btn" type="submit" value="login">
@@ -88,8 +94,27 @@
             
 
         </section>
+<!-- 
 
-
+ysql> describe trader;
++--------------+------------------+------+-----+---------+-------+
+| Field        | Type             | Null | Key | Default | Extra |
++--------------+------------------+------+-----+---------+-------+
+| email        | varchar(60)      | NO   | PRI | NULL    |       |
+| first_name   | varchar(30)      | NO   |     | NULL    |       |
+| last_name    | varchar(30)      | NO   |     | NULL    |       |
+| password     | char(3)          | NO   |     | NULL    |       |
+| cool         | enum('Y','N')    | NO   |     | NULL    |       |
+| twit_acc     | varchar(60)      | YES  |     | NULL    |       |
+| phone        | varchar(15)      | YES  |     | NULL    |       |
+| ethlow       | int(10) unsigned | YES  |     | NULL    |       |
+| ethhigh      | int(10) unsigned | YES  |     | NULL    |       |
+| btclow       | int(10) unsigned | YES  |     | NULL    |       |
+| btchigh      | int(10) unsigned | YES  |     | NULL    |       |
+| date_entered | timestamp        | YES  |     | NULL    |       |
++--------------+------------------+------+-----+---------+-------+
+12 rows in set (0.00 sec)
+ -->
 
 
         </main><!--  END-OF-MAIN  -->

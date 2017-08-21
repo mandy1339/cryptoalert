@@ -1,10 +1,46 @@
-npm start
-change pic in html
-del worker files						done
-do npm scripts							
-move core.js into scr/cryptoalert		done
-delete core.clj		DONE
-delete test.clj		DONE
+add new users through signup    
+    take inputs from fields.             xxxx
+    make required fields required          xxxx
+    send the info as a post to signup       xxxx
+    in the backend get variables as paramaters  xxxx
+    add them to the db as a query               xxxx
+    
 
 
-design new interface
+redirect signup to login       xxxx
+add message you just signed up successfully upon signing up xxxx
+change nav bar if logged in     xxxx
+update users in settings 
+change homepage     
+add backend logic to check for prices and send alerts
+
+
+
+
+
+
+ysql> describe trader;
++--------------+------------------+------+-----+---------+-------+
+| Field        | Type             | Null | Key | Default | Extra |
++--------------+------------------+------+-----+---------+-------+
+| email        | varchar(60)      | NO   | PRI | NULL    |       |
+| first_name   | varchar(30)      | NO   |     | NULL    |       |
+| last_name    | varchar(30)      | NO   |     | NULL    |       |
+| password     | char(3)          | NO   |     | NULL    |       |
+| cool         | enum('Y','N')    | NO   |     | NULL    |       |
+| twit_acc     | varchar(60)      | YES  |     | NULL    |       |
+| phone        | varchar(15)      | YES  |     | NULL    |       |
+| ethlow       | int(10) unsigned | YES  |     | NULL    |       |
+| ethhigh      | int(10) unsigned | YES  |     | NULL    |       |
+| btclow       | int(10) unsigned | YES  |     | NULL    |       |
+| btchigh      | int(10) unsigned | YES  |     | NULL    |       |
+| date_entered | timestamp        | YES  |     | NULL    |       |
++--------------+------------------+------+-----+---------+-------+
+12 rows in set (0.00 sec)
+
+
+
+LOW PRIO
+add 2nd password check                      
+if you click settings without being logged in display message after redirect to login  xxxx
+add a logout button to login page, 
