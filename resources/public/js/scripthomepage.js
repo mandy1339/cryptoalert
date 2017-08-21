@@ -16,7 +16,7 @@ socket.emit('amILoggedIn', {field1: 'am I logged in?'});
 
 socket.on('loggedInResponse', function(data) {
     if(data.field1 == true) {
-        alert('logged in');
+        alert('logged in successfully');
     }
 });
 
@@ -24,7 +24,7 @@ socket.emit('amILoggedOut', {field1: 'am I logged out?'});
 
 socket.on('loggedOutResponse', function(data) {
     if(data.field1 == true) {
-        alert('logged out');
+        alert('logged out successfully');
     }
 });
 

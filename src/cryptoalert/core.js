@@ -16,11 +16,21 @@ var LocalStrategy = require('passport-local').Strategy;  // For logging in
 var socket = require('socket.io');
 var justLoggedIn = false;                           // For announcing successful log in
 var justLoggedOut = false;                          // For announcing successful log out
+var db = require('mysql');
 
 
-// Make a an array called records with objects containing db rows from aws
 
 
+
+
+//DATABASE SETUP
+//================================================================================================
+var connection = db.createConnection({
+  host:process.env.DB_HOSTNAME,
+  user:process.env.DB_USERNAME,
+  password:process.env.DB_PASSWORD,
+  database:process.env.DB_NAME
+})
 
 
 
@@ -48,7 +58,7 @@ findById = function(id, cb) {
 }
 
 findByEmail = function(email, cb) {
-    console.log('XXXXXXXXXbbbbbXXXXXXXXXXXXXX');
+  console.log('XXXXXXXXXbbbbbXXXXXXXXXXXXXX');
   process.nextTick(function() {
     for (var i = 0, len = records.length; i < len; i++) {
       var record = records[i];
@@ -60,7 +70,22 @@ findByEmail = function(email, cb) {
   });
 }
 
-
+findByEmail2 = function(email, cb) {
+  console.log('\n\n\nfindbyemail2 email passed: ', email, '\n\n\n\n')
+  process.nextTick(function() {
+    var query = 'SELECT * FROM trader WHERE email="mandy1339@gmail.com";';
+    var record;
+    connection.query(query, function(error, rows, fields) {
+      if(rows[0] && rows[0].email === email){
+        record = rows[0];
+        return cb(null, record);
+      }
+      else {
+        return cb(null, null);
+      }
+    });  
+  });
+}
 
 // Configure the local strategy for use by Passport.
 //
@@ -74,10 +99,12 @@ passport.use(new LocalStrategy(
     // passwordField: 'passwd',
     session: false},
     function(email, password, cb) {
-    findByEmail(email, function(err, user) {
+    findByEmail2(email, function(err, user) {
         console.log('XXXXXXXXXXXccccccXXXXXXXXXXXX');
+        console.log('\n\nuser: ', user, '\n\n');
         if (err) { return cb(err); }
         if (!user) { return cb(null, false); }
+        console.log('\n\nuser: ', user, '\n\n');
         if (user.password != password) { return cb(null, false); }
         return cb(null, user);
     });
@@ -93,11 +120,11 @@ passport.use(new LocalStrategy(
 // deserializing.
 passport.serializeUser(function(user, cb) {
     console.log('XXXXXXXXXXddddddXXXXXXXXXXXXX');
-  cb(null, user.id);
+  cb(null, user.email);
 });
 
-passport.deserializeUser(function(id, cb) {
-  findById(id, function (err, user) {
+passport.deserializeUser(function(email, cb) {
+  findByEmail2(email, function (err, user) {
       console.log('XXXXXXXXXXXeeeeeeXXXXXXXXXXXX');
     if (err) { return cb(err); }
     cb(null, user);
