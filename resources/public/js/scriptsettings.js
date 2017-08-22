@@ -4,18 +4,29 @@
 // Initialize socket object
 var socket = io.connect('http://localhost:8001');
 
-// Upon receiving a message
+// Upon establishing connection, log it
 socket.on("connectionEstablished", function(data) {
     console.log("Message from the server arrived")
     console.log(data);
-    $('#fromServer').append('<div>' + data.field1 + '</div>');
-})
+});
 
-socket.on("loginMsg", function(data) {
-    console.log("login msg")
-    console.log(data);
-    $('#fromServer').append('<div>' + data.field1 + '</div>');
-})
+socket.emit('userDataRequest', {field1: 'I need user data from db'});
+
+socket.on('userDataResponse', function(data) {
+    //update all the spans with the user data
+    userData = data.field1;
+    console.log(userData.field1);
+    if(userData.first_name) { document.getElementById('first-name-span').innerText = userData.first_name; }
+    if(userData.last_name) { document.getElementById('last-name-span').innerText = userData.last_name; }
+    if(userData.cool) {document.getElementById('cool-span').innerText = userData.cool; }
+    if(userData.twit_acc) { document.getElementById('twit_acc-span').innerText = userData.twit_acc; }
+    if(userData.phone) { document.getElementById('phone-span').innerText = userData.phone; }
+    if(userData.ethlow) { document.getElementById('ethlow-span').innerText = userData.ethlow; }
+    if(userData.ethhigh) { document.getElementById('ethhigh-span').innerText = userData.ethhigh; }
+    if(userData.btclow) { document.getElementById('btclow-span').innerText = userData.btclow; }
+    if(userData.btchigh) { document.getElementById('btchigh-span').innerText = userData.btchigh; }
+});
+
 
 
 
@@ -43,14 +54,11 @@ $.ajax({
         var navBar = document.getElementById('my-nav-bar'); // get the nav menu to append to
         navBar.appendChild(li);                             // append new li to it
         
-        //Now add the logout tab
+        // Add the logout tab
         var li2 = document.createElement('li');
         li2.setAttribute('role', 'presentation');
         li2.innerHTML = `<a href="/logout">Logout</a>`;
         navBar.appendChild(li2);
-
-        //Now remove the sign up tab
-        navBar.removeChild(document.getElementById('signup-tab'));
     }
 });
 

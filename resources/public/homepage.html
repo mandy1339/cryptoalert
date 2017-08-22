@@ -15,7 +15,7 @@
                 <!--    NAV    -->
         <ul id="my-nav-bar" class="nav nav-pills">
             <li role="presentation" class="active"><a href="/homepage">Home</a></li>
-            <li role="presentation"><a href="/login">Login</a></li>
+            <li role="presentation" id="login-tab"><a href="/login">Login</a></li>
             <li role="presentation" id="signup-tab"><a href="/signup">Signup</a></li>
         </ul>
 
@@ -29,57 +29,49 @@
         </header>
 
 
-        <!-- FROM SERVER MMSGES -->
-        <fieldset>
-            <legend>Messages from server</legend>
-            <div id="fromServer"></div>
-        </fieldset>
-
-
 
         <!--  MAIN  -->
-        <main>
+        <main class="row">
 
 
- <!--    CONTROL SECTION NEW    -->
-        <section class="row ControlSection well" id="section2" style="text-align: center">
+        <!--    CONTROL SECTION INFO    -->
+        <section class="ControlSection well col-md-8" id="section2" style="text-align: center">
 
-            
-            <!--   1    -->
-            <div class="col-md-3">
-                <h3>SignalUnder</h3>
-                <div>$<span id="leftThreshold">0.00</span></div>
-                <div>
-                    <textarea  id="leftTextArea" placeholder="$0.00"></textarea>
-                    <button class="btn btn-secondary" id="leftUpdateButton">update</button>
-                </div>
-
-            </div>
-                     
-
-
-
-            <!--   2    -->
-            
-            <div class="col-md-offset-2 col-md-2">
-                <h3>CurrentValue</h3>
-                <div>$<span id="currentValue">0.00</span></div>
+            <div style="text-align: left">
+                <h2>Set Up Custom Alerts For Price Changes Of Ethereum Or Bitcoin</h3>
+                <h3>How It Works:</h3>
+                <ul>
+                    <li>create a free account</li>
+                    <li>set up your upper/lower threshold of eth/btc price</li>
+                    <li>get notified via your preferred method</li>
+                </ul>
+                <h3>Supported Alert Methods:</h3>
+                <ul>
+                    <li>email</li>
+                    <li>sms</li>
+                    <li>twitter</li>
+                </ul>
            </div>
-
-
-
-            <!--  3   -->
-            <div class="col-md-offset-2 col-md-3">
-                <h3>SignalOver</h3>
-                <div >$<span id="rightThreshold">1000.00</span></div>
-                <div >
-                    <textarea  id="rightTextArea" placeholder="$0.00"></textarea>
-                    <button class="btn btn-secondary" id="rightUpdateButton">update</button>
-                </div>
-            </div>
-
+            
         </section>
 
+        <!--    CONTROL SECTION ETH PRICE   -->
+        <div id="eth-btc-div" class="col-md-4">
+            <section class="ControlSection well PriceSection" id="section-eth" style="text-align: center">
+                <div>
+                    <h3>Ethereum's Price </h3>
+                    <div>$<span id="currentValueEth">0.00</span></div>
+                </div>
+            </section>
+            
+            <section class="ControlSection well PriceSection" id="section-btc" style="text-align: center">
+                
+                <div>
+                    <h3>Bitcoin's Price</h3>
+                    <div>$<span id="currentValueBtc">0.00</span></div>
+                </div>
+            </section>
+        </div>
 
 
 

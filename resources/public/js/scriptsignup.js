@@ -4,12 +4,11 @@
 // Initialize socket object
 var socket = io.connect('http://localhost:8001');
 
-// Upon receiving a message
+// Upon establishing connection, log it
 socket.on("connectionEstablished", function(data) {
     console.log("Message from the server arrived")
     console.log(data);
-    $('#fromServer').append('<div>' + data.field1 + '</div>');
-})
+});
 
 
 

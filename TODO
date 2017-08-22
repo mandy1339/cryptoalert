@@ -44,3 +44,54 @@ LOW PRIO
 add 2nd password check                      
 if you click settings without being logged in display message after redirect to login  xxxx
 add a logout button to login page, 
+
+
+
+
+
+
+
+{
+"first_name": "asdf",
+"last_name": "sadf",
+"password": "123123123",
+"cool": "y",
+"twit": "asf",
+"phone": "sadf",
+"ethlow": "1",
+"ethhigh": "10000",
+"btclow": "1",
+"btchigh": "10000"
+}
+
+ CONTROL SECTION NEW    -->
+        <section class="row ControlSection well" id="section2" style="text-align: center">
+
+            
+            <!--   1    -->
+            <div class="col-md-3">
+                <h3>SignalUnder</h3>
+                <div>$<span id="leftThreshold">0.00</span></div>
+                <div>
+                    <textarea  id="leftTextArea" placeholder="$0.00"></textarea>
+                    <button class="btn btn-secondary" id="leftUpdateButton">update</button>
+                </div>
+
+            </div>
+                     
+
+
+
+            <!--   2    -->
+            
+            <div class="col-md-offset-2 col-md-2">
+                <h3>CurrentValue</h3>
+                <div>$<span id="currentValue">0.00</span></div>
+           </div>
+
+
+
+            <!--  3   -->
+            <div class="col-md-offset-2 col-md-3">
+                <h3>SignalOver</h3>
+                <div >$<span id="rightThreshold">1000.00</span></div>

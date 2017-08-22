@@ -7,6 +7,11 @@
 // Initialize socket object
 var socket = io.connect('http://localhost:8001');
 
+// Upon establishing connection, log it
+socket.on("connectionEstablished", function(data) {
+    console.log("Message from the server arrived")
+    console.log(data);
+});
 
 socket.emit('amISignedUp', {field1: 'am I signed up?'});
 
