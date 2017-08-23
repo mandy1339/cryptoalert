@@ -41,26 +41,26 @@
  <!--    CONTROL SECTION NEW    -->
         <section class="row ControlSection well" id="section2" style="text-align: left">
             
-            <form id="fm1" method="post">
+            <form id="fm1" method="post" autocomplete="off">
                 
                 <!--  email  -->
                 <div class="field">
                     <h2><label>email address *</label></h2>
-                    <input id="email" required="true" type="email" name="email">
+                    <input id="email" required="true" type="email" name="email" autocomplete="off">
                     <div style="clear: both;"></div>
                 </div>
                 
                 <!-- first name -->
                 <div class="field">
                     <h2><label>first name *</label></h2>
-                    <input id="first-name" required="true" type="text" name="first_name">
+                    <input id="first-name" required="true" type="text" name="first_name" autocomplete="off">
                     <div style="clear: both;"></div>
                 </div>
                 
                 <!--  last name  -->
                 <div class="field">
                     <h2><label>last name *</label></h2>
-                    <input id="last-name" required="true" type="text" name="last_name">
+                    <input id="last-name" required="true" type="text" name="last_name" autocomplete="off">
                     <div style="clear: both;"></div>
                 </div>
 
@@ -68,7 +68,7 @@
                 <!--  password  -->
                 <div class="field">
                     <h2><label for="password" class="required">password (3 char pin) *</label></h2>
-                    <input id="password" required="true" type="password" name="password" maxlength="3" pattern=".{3,}" title="3 char pin">
+                    <input id="password" required="true" type="password" name="password" maxlength="3" pattern=".{3,}" title="3 char pin" autocomplete="off">
                     <div style="clear: both;"></div>
                 </div>
 
@@ -83,12 +83,12 @@
                 <!--  are you cool?  -->
                 <div class="field">
                     <h2><label>are you cool? *</label></h2>
-                    <input id="cool" required="true" type="text" name="cool" pattern="[YNyn]" maxlength="1" placeholder="y / n" title="y / n">
+                    <input id="cool" required="true" type="text" name="cool" pattern="[YNyn]" maxlength="1" placeholder="y / n" title="y / n" autocomplete="off">
                     <div style="clear: both;"></div>
                 </div>
                
 
-                <input id="login-btn" type="submit" value="login">
+                <input id="submit-btn" type="submit" value="submit">
             </form>
             
             

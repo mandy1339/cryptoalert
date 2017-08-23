@@ -86,14 +86,14 @@ findByEmail2 = function(email, cb) {
       console.log('\n\nrows is:\n', rows);
       console.log('\n\nrows[0] is:\n', rows[0]);
       if(rows[0] && rows[0].email === email){
-        
+
         record = rows[0];
         return cb(null, record);
       }
       else {
         return cb(null, null);
       }
-    });  
+    });
   });
 }
 
@@ -166,15 +166,15 @@ app.use(passport.session());
 //========
 app.get('/', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/homepage.html'))});
 app.get('/homepage', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/homepage.html'))});
-app.get('/btc', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/btc.html'))});     
+app.get('/btc', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/btc.html'))});
 app.get('/signup', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/signup.html'))});
-app.get('/logout',  function(req, res){  req.logout(); res.redirect('/'); justLoggedOut = true;  });  // logout 
+app.get('/logout',  function(req, res){  req.logout(); res.redirect('/'); justLoggedOut = true;  });  // logout
 app.get('/settings', require('connect-ensure-login').ensureLoggedIn() ,  function(req, res) {
   userData = req.user;  // load user data to send through socket upon request
   res.sendFile(path.join(__dirname + '/./../../resources/public/settings.html'))}); //server the view
 app.get('/profile',  require('connect-ensure-login').ensureLoggedIn(),  function(req, res){res.render('profile', { user: req.user });}); //settings requires login
 app.get('/user', function(req, res) {res.send({user:req.user});});
-app.get('/login', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/login.html'))}); 
+app.get('/login', function(req, res) {res.sendFile(path.join(__dirname + '/./../../resources/public/login.html'))});
 app.get('/failedlogin', function(req, res) {res.sendFile(path.join(__dirname + './../../resources/public/failedlogin.html'))});
 
 // post
@@ -224,7 +224,7 @@ app.post('/settings', function(req, res) {
 
   //join the received fields with a comma into the string queryFields
   var queryFields = strArr.join(', ');
-  
+
   //LOGGING DELETE
   console.log('\n\n\n\n\n\nqueryFields:\n');
   console.log(queryFields);
@@ -234,15 +234,15 @@ app.post('/settings', function(req, res) {
   console.log(req.body);
   console.log('\n\n\n\n\n\n\n');
   console.log(Object.keys(req.body));
-  
+
   // create the full query string to query the db
   var fullQuery = 'UPDATE trader SET ' + queryFields + ` WHERE email = '` + req.user.email + `'`;
-  
+
   //LOGGING DELETE
   console.log('\n\n\n\n\n\nfullquerystring:\n');
   console.log(fullQuery);
   console.log('\n\n\n\n\n\n\n');
-  
+
   // query the database
   connection.query(fullQuery, function(error, rows, columns) {
     if(error){
@@ -259,7 +259,7 @@ app.post('/settings', function(req, res) {
 
 
 // Serve files (after gets for redirects to work)
-app.use(express.static(__dirname + '/./../../resources/public'));      
+app.use(express.static(__dirname + '/./../../resources/public'));
 
 
 // Listen
@@ -290,7 +290,7 @@ io.on('connection', function(socket){
     console.log('responding back with variable justLoggedIn which = ', justLoggedIn); // logging value of justLoggedIn
     socket.emit('loggedInResponse', {field1: justLoggedIn});    // respond to client with value of justLoggedIn
   });
-  
+
   // upon client request to learn if log out was successful, respond with the answer
   socket.on('didIJustLogOut', function(data) {
     console.log('\n\nclient is requesting log out info\n\n');      // log that the event triggered
@@ -304,7 +304,7 @@ io.on('connection', function(socket){
     console.log('\n\nclient is requesting log out info\n\n');      // log that the event triggered
     console.log('responding back with variable justSignedUp which = ', justSignedUp); // logging value of justSignedUp
     socket.emit('signedUpResponse', {field1: justSignedUp});      // respond to the client's request
-    setTimeout(function(){jsutSignedUp = false}, 1000);
+    setTimeout(function(){justSignedUp = false}, 1000);
   });
 
   // upon client request to get user data object, send the user data object
@@ -314,8 +314,3 @@ io.on('connection', function(socket){
     socket.emit('userDataResponse', {field1: userData})
   });
 });
-
-
-
-
-
