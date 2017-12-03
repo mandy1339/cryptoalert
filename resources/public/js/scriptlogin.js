@@ -5,7 +5,8 @@
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 // Initialize socket object
-var socket = io.connect('http://54.89.227.145');
+var hostName = 'http://www.cryptoalert.armandotoledo.com';
+var socket = io.connect(hostName);
 
 // Upon establishing connection, log it
 socket.on("connectionEstablished", function(data) {
@@ -30,7 +31,7 @@ socket.on('signedUpResponse', function(data) {
 var user;
 $.ajax({
     type:   'GET',
-    url:    'http://54.89.227.145'
+    url:    hostName
 }).done(function(response) {
     console.log(response);
     user = response.user;
