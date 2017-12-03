@@ -5,7 +5,7 @@
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 // Initialize socket object
-var socket = io.connect('http://localhost:8001');
+var socket = io.connect('http://54.89.227.145');
 
 // Upon establishing connection, log it
 socket.on("connectionEstablished", function(data) {
@@ -30,7 +30,7 @@ socket.on('signedUpResponse', function(data) {
 var user;
 $.ajax({
     type:   'GET',
-    url:    'http://localhost:8001/user'
+    url:    'http://54.89.227.145'
 }).done(function(response) {
     console.log(response);
     user = response.user;

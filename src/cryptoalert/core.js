@@ -154,7 +154,7 @@ app.use(require('cookie-parser')());                // for logging in
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(bodyParser.json());                         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({extended: true}));   // to support URL-encoded bodies
-app.set('port', (process.env.PORT || 8001));        // set port
+app.set('port', (process.env.PORT || 80));        // set port
 // initialize Passport and restore authentication state, if any, from the session.
 app.use(passport.initialize());
 app.use(passport.session());
